@@ -1,5 +1,6 @@
 package com.example.mvd.app;
 
 public interface IGetCarsQueryListener {
-    void Success(GetCarsQueryResponse[] response);
+    	void Success(GetCarsQueryResponse[] response);
+	
 }

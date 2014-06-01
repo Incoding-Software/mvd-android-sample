@@ -1,13 +1,14 @@
 package com.example.mvd.app;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class GetCarsQueryTask extends AsyncTask<String, Integer, String> {
@@ -16,22 +17,17 @@ public class GetCarsQueryTask extends AsyncTask<String, Integer, String> {
 
     private IGetCarsQueryListener listener;
 
-    private GetCarsQueryRequest request = new GetCarsQueryRequest();
+    private GetCarsQueryRequest request  = new GetCarsQueryRequest() ;
 	
     public GetCarsQueryTask(Context context) {    
 	  this.context= context;
 	      }
-	
-	
+		
 	@Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         try {
-            JSONObject jsonObject = new JSONObject(s);
-            JSONArray data = jsonObject.isNull("data")
-                    ? new JSONArray()
-                    : jsonObject.getJSONArray("data");
-			listener.Success( GetCarsQueryResponse.Create(data) );									
+            listener.Success( GetCarsQueryResponse.Create(new JSONObject(s)) );
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,13 +36,8 @@ public class GetCarsQueryTask extends AsyncTask<String, Integer, String> {
 	@Override
     protected String doInBackground(String... strings) {
         try {
-            HttpResponse response = request.execute();
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-            for (Header header : response.getHeaders("Set-Cookie")) {
-                preferences.edit().putString(header.getName(), header.getValue());
-            }
-            String json = EntityUtils.toString(response.getEntity());
-            return json;
+            HttpResponse response = request.execute(context);            
+            return EntityUtils.toString(response.getEntity());            
         } catch (Exception e) {
             e.printStackTrace();
         }

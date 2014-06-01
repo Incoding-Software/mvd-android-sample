@@ -3,12 +3,13 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="createEmptyContentRootDirectories" value="true" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="C:\Users\Artur\AndroidStudioProjects\MVd" />
-            <option value="C:\Users\Artur\AndroidStudioProjects\MVd\app" />
+            <option value="C:\TempProject\mvd-android-sample\src" />
+            <option value="C:\TempProject\mvd-android-sample\src\app" />
           </set>
         </option>
       </GradleProjectSettings>

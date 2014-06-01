@@ -72,7 +72,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void OnClick_Command(final View view) {
-        SignCommandRequest request = new SignCommandRequest();
+   /*     SignCommandRequest request = new SignCommandRequest();
         request.Id = "id";
         new SignCommandTask(this, request)
                 .On(new ISignCommandListener() {
@@ -81,7 +81,7 @@ public class MainActivity extends ActionBarActivity {
                         Button button = (Button) view.findViewById(R.id.button);
                         button.setText("Success");
                     }
-                });
+                });*/
     }
 
 }
