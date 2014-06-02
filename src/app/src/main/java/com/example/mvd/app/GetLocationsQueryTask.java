@@ -9,26 +9,27 @@ import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-public class SignCommandTask extends AsyncTask<String, Integer, String> {
+public class GetLocationsQueryTask extends AsyncTask<String, Integer, String> {
 
     private Context context;
 
-    private ISignCommandListener listener;
+    private IGetLocationsQueryListener listener;
 
-    private SignCommandRequest request ;
+    private GetLocationsQueryRequest request  = new GetLocationsQueryRequest() ;
 	
-    public SignCommandTask(Context context, SignCommandRequest request ) {    
+    public GetLocationsQueryTask(Context context) {    
 	  this.context= context;
-	  	  this.request = request;    
 	      }
 		
 	@Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         try {
-            listener.Success( SignCommandResponse.Create(new JSONObject(s)) );
+            listener.Success( GetLocationsQueryResponse.Create(new JSONObject(s)) );
         } catch (Exception e) {
             e.printStackTrace();
+        } catch (ModelStateException e) {
+            listener.Error(e.getState());
         }
     }
 
@@ -43,7 +44,7 @@ public class SignCommandTask extends AsyncTask<String, Integer, String> {
         return "";
     }
 
-    public void On(ISignCommandListener on)
+    public void On(IGetLocationsQueryListener on)
     {
         listener = on;
         execute();

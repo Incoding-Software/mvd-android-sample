@@ -48,43 +48,46 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void OnClick_Query_Single(final View view) {
-        new GetCarByIdQueryTask(this, new GetCarByIdQueryRequest())
-                .On(new IGetCarByIdQueryListener() {
-                    @Override
-                    public void Success(GetCarByIdQueryResponse response) {
-                        Button button = (Button) view.findViewById(R.id.button2);
-                        button.setText(response.Brand);
-                    }
-                });
+
     }
 
     public void OnClick_Query_Array(final View view) {
-        new GetCarsQueryTask(this)
-                .On(new IGetCarsQueryListener() {
-                    @Override
-                    public void Success(GetCarsQueryResponse[] response) {
-                        Button button = (Button) view.findViewById(R.id.button3);
-                        String allBrand = "";
-                        for (GetCarsQueryResponse car : response) {
-                            allBrand += car.Brand + ",";
-                        }
-                        button.setText(allBrand);
-                    }
-                });
+       new GetLocationsQueryTask(this)
+               .On(new IGetLocationsQueryListener() {
+                   @Override
+                   public void Success(GetLocationsQueryResponse[] response) {
+                       Button button = (Button) view.findViewById(R.id.button3);
+                       String allBrand = "";
+                       for (GetLocationsQueryResponse locationsQueryResponse : response) {
+                           allBrand += locationsQueryResponse.Name + ",";
+                       }
+                       button.setText(allBrand);
+                   }
+                   @Override
+                   public void Error(JsonModelStateData[] modelState) {
+
+                   }
+               });
     }
 
     public void OnClick_Command(final View view) {
-        TestCommandRequest request = new TestCommandRequest();
-        request.Prop = "Prop";
-        request.PropBool = true;
-        request.PropEnum = TestOfEnum.Value2;
-        new TestCommandTask(this, request)
-                .On(new ITestCommandListener() {
+
+        SignUserCommandRequest request = new SignUserCommandRequest();
+        request.UserName = "admin@mail.com";
+        request.Password = "password";
+        new SignUserCommandTask(this, request)
+                .On(new ISignUserCommandListener() {
                     @Override
-                    public void Success(TestCommandResponse response) {
+                    public void Success(SignUserCommandResponse response) {
                         Button button = (Button) view.findViewById(R.id.button);
-                    button.setText(response.data.toString());
-                }
+                        button.setText("Ready");
+                    }
+
+                    @Override
+                    public void Error(JsonModelStateData[] state) {
+                        Button button = (Button) view.findViewById(R.id.button);
+                        button.setText(state[0].name + " / " + state[0].errorMessage);
+                    }
                 });
     }
 

@@ -8,8 +8,8 @@
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
-            <option value="C:\Workspace\mvd-android-sample\src" />
-            <option value="C:\Workspace\mvd-android-sample\src\app" />
+            <option value="C:\TempProject\mvd-android-sample\src" />
+            <option value="C:\TempProject\mvd-android-sample\src\app" />
           </set>
         </option>
       </GradleProjectSettings>

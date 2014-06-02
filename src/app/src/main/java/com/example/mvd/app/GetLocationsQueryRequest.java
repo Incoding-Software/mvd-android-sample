@@ -9,7 +9,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import java.io.IOException;
 
-public class GetCarsQueryRequest {
+public class GetLocationsQueryRequest {
 
      
 
@@ -17,11 +17,12 @@ public class GetCarsQueryRequest {
      SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 	    	        
 				
-        String uri = "http://mvd-endpoint.incframework.com/Dispatcher/Query?incType=GetCarsQuery";
+        String uri = "http://bmapp.incoding.biz/Dispatcher/Query?incType=GetLocationsQuery";
                 
 	    HttpGet http = new HttpGet(uri);		            
                  
         http.setHeader("Set-Cookie", preferences.getString("Set-Cookie", "Set-Cookie"));
+		http.setHeader("X-Requested-With" , "XMLHttpRequest");
         HttpResponse response = new DefaultHttpClient().execute(http);
 		Header cookieAsHeader = response.getFirstHeader("Set-Cookie");
         if (cookieAsHeader != null) {
