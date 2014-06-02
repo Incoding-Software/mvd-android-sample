@@ -15,23 +15,18 @@ public class GetCarByIdQueryTask extends AsyncTask<String, Integer, String> {
 
     private IGetCarByIdQueryListener listener;
 
-    private GetCarByIdQueryRequest request  = new GetCarByIdQueryRequest() ;
+    private GetCarByIdQueryRequest request ;
 	
     public GetCarByIdQueryTask(Context context, GetCarByIdQueryRequest request ) {    
 	  this.context= context;
 	  	  this.request = request;    
 	      }
-	
-	
+		
 	@Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         try {
-            JSONObject jsonObject = new JSONObject(s);
-            JSONObject data = jsonObject.isNull("data")
-                    ? new JSONObject()
-                    : new JSONObject(jsonObject.getString("data"));            
-			listener.Success( GetCarByIdQueryResponse.Create(data) );									
+            listener.Success( GetCarByIdQueryResponse.Create(new JSONObject(s)) );
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -40,13 +35,8 @@ public class GetCarByIdQueryTask extends AsyncTask<String, Integer, String> {
 	@Override
     protected String doInBackground(String... strings) {
         try {
-            HttpResponse response = request.execute();
-            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-            for (Header header : response.getHeaders("Set-Cookie")) {
-                preferences.edit().putString(header.getName(), header.getValue());
-            }
-            String json = EntityUtils.toString(response.getEntity());
-            return json;
+            HttpResponse response = request.execute(context);            
+            return EntityUtils.toString(response.getEntity());            
         } catch (Exception e) {
             e.printStackTrace();
         }

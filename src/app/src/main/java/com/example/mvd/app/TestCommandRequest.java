@@ -15,18 +15,22 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SignCommandRequest {
+public class TestCommandRequest {
 
-    public String Id;
+    public String Prop;
+    public Boolean PropBool;
+    public TestOfEnum PropEnum;
      
 
    public HttpResponse execute(Context context) throws IOException {   
      SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
 	     	        	    
-        HttpPost http = new HttpPost("http://mvd-endpoint.incframework.com/Dispatcher/Push?incType=SignCommand");		        
+        HttpPost http = new HttpPost("http://mvd-endpoint.incframework.com/Dispatcher/Push?incType=TestCommand");		        
         http.setHeader("Content-Type", "application/x-www-form-urlencoded");				
         List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-        		parameters.add(new BasicNameValuePair("Id", String.valueOf(this.Id)));
+        		parameters.add(new BasicNameValuePair("Prop", String.valueOf(this.Prop)));
+				parameters.add(new BasicNameValuePair("PropBool", String.valueOf(this.PropBool)));
+				parameters.add(new BasicNameValuePair("PropEnum", String.valueOf(this.PropEnum)));
 		        http.setEntity(new UrlEncodedFormEntity(parameters, HTTP.UTF_8));		
                  
         http.setHeader("Set-Cookie", preferences.getString("Set-Cookie", "Set-Cookie"));

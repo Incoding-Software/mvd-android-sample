@@ -1,33 +1,32 @@
 package com.example.mvd.app;
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
-public class GetCarsQueryTask extends AsyncTask<String, Integer, String> {
+public class TestCommandTask extends AsyncTask<String, Integer, String> {
 
     private Context context;
 
-    private IGetCarsQueryListener listener;
+    private ITestCommandListener listener;
 
-    private GetCarsQueryRequest request  = new GetCarsQueryRequest() ;
+    private TestCommandRequest request ;
 	
-    public GetCarsQueryTask(Context context) {    
+    public TestCommandTask(Context context, TestCommandRequest request ) {    
 	  this.context= context;
+	  	  this.request = request;    
 	      }
 		
 	@Override
     protected void onPostExecute(String s) {
         super.onPostExecute(s);
         try {
-            listener.Success( GetCarsQueryResponse.Create(new JSONObject(s)) );
+            listener.Success( TestCommandResponse.Create(new JSONObject(s)) );
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -44,7 +43,7 @@ public class GetCarsQueryTask extends AsyncTask<String, Integer, String> {
         return "";
     }
 
-    public void On(IGetCarsQueryListener on)
+    public void On(ITestCommandListener on)
     {
         listener = on;
         execute();

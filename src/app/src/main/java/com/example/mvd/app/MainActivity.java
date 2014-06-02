@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.util.List;
 
 
@@ -72,15 +74,17 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void OnClick_Command(final View view) {
-        SignCommandRequest request = new SignCommandRequest();
-        request.Id = "id";
-        new SignCommandTask(this, request)
-                .On(new ISignCommandListener() {
+        TestCommandRequest request = new TestCommandRequest();
+        request.Prop = "Prop";
+        request.PropBool = true;
+        request.PropEnum = TestOfEnum.Value2;
+        new TestCommandTask(this, request)
+                .On(new ITestCommandListener() {
                     @Override
-                    public void Success(Object response) {
+                    public void Success(TestCommandResponse response) {
                         Button button = (Button) view.findViewById(R.id.button);
-                        button.setText("Success");
-                    }
+                    button.setText(response.data.toString());
+                }
                 });
     }
 
