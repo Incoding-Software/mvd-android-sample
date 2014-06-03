@@ -48,7 +48,25 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void OnClick_Query_Single(final View view) {
+        GetQuestionByLocationQueryRequest request = new GetQuestionByLocationQueryRequest();
+        request.LocationId = "71b35aca-a727-4951-ae03-a33e00e942a0";
+        new GetQuestionByLocationQueryTask(this, request)
+                .On(new IGetQuestionByLocationQueryListener() {
+                    @Override
+                    public void Success(GetQuestionByLocationQueryResponse[] response) {
+                        Button button = (Button) view.findViewById(R.id.button2);
+                        String names = "";
+                        for (GetQuestionByLocationQueryResponse question : response) {
+                            names += question.Type.toString() + ",";
+                        }
+                        button.setText(names);
+                    }
 
+                    @Override
+                    public void Error(JsonModelStateData[] modelState) {
+
+                    }
+                });
     }
 
     public void OnClick_Query_Array(final View view) {
